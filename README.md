@@ -1,4 +1,4 @@
-# IbaiRPG
+# AI-driven-RPG-Application
 
 Este es un proyecto experimental que explora el diseño de un **motor narrativo interactivo** impulsado por IA, centrado en la toma de decisiones estratégicas y la gestión de consecuencias a medio y largo plazo.
 
