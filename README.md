@@ -40,22 +40,24 @@ La IA se utiliza como herramienta interpretativa y generativa dentro de límites
 ---
 
 ## Estructura del proyecto
-
+```text
 ibai-rpg/
 ├─ backend/   # Motor narrativo y lógica
 ├─ frontend/  # Interfaz web y demo
 └─ docs/      # Documentación adicional
-
+```
 ---
 
 ## Estado actual
 
+```text
 ✅ Prólogo completo implementado
 ✅ Motor de escenas funcional
 ✅ Estado persistente
 ✅ Integración de texto, imagen y voz
 🔄 Desarrollo del Acto 1 en progreso
 
+```
 ---
 
 ## Aviso
