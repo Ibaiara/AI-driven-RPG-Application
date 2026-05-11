@@ -6,40 +6,6 @@ Este diagrama muestra el flujo principal del sistema a alto nivel, desde la inte
 flowchart TD
     Player[Jugador / Frontend] -->|Request| Webhook[Webhook n8n]
 
-    Webhook --> LoadState[Cargar / Inicializar Estado]
-    LoadState --> Scene[Determinar Escena Activa]
-
-    Scene --> Prompt[Construir Prompt]
-    Prompt --> AI[IA Narrativa]
-
-    AI --> Narrative[Texto Narrativo]
-    Narrative --> Decisions[Decisiones Disponibles]
-
-    Decisions -->|Elección| Apply[Aplicar Consecuencias]
-    Apply --> Save[Persistir Estado]
-
-    Save --> Response[Respuesta al Frontend]
-    Response --> Player
-
-    subgraph IA
-        AI
-    end
-
-    subgraph Estado
-        LoadState
-        Save
-    end
-
-```
-
-## Flujo narrativo y multimedia
-
-Este diagrama detalla cómo la IA puede solicitar recursos multimedia (imagen y voz), que el motor gestiona de forma desacoplada.
-
-```mermaid
-flowchart TD
-    Player[Jugador / Frontend] -->|Request| Webhook[Webhook n8n]
-
     Webhook --> LoadState[Cargar Estado]
     LoadState --> Scene[Escena Activa]
     Scene --> Prompt[Prompt Estructurado]
