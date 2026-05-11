@@ -1,0 +1,926 @@
+{
+  "name": "RPG Game",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rpg",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        432,
+        -80
+      ],
+      "id": "191e4c05-c420-45c9-8246-7a7eefe252c1",
+      "name": "Webhook",
+      "webhookId": "bb7a681a-389f-4c2d-b1af-f200cda76b39"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "return {\n  user_id: $json.user_id,\n  input: $json.input,\n  state: $json.state\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        752,
+        -80
+      ],
+      "id": "857dd849-cc79-4bdc-80d5-f8686794adc9",
+      "name": "get State"
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = $json.state;\nconst input = $json.input;\n\nconst prompt = `Eres el motor narrativo de un RPG político–estratégico.\n\nNO eres un narrador de fantasía.\nNO eres un generador de combates.\nNO eres un sistema de recompensas simples.\n\nTu función es presentar situaciones complejas,\ngenerar decisiones estratégicas\ny aplicar consecuencias acumulativas y balanceadas.\n\n────────────────────────────────────────\nMUNDO (CANON DEL JUEGO)\n────────────────────────────────────────\n\nEl mundo es una realidad alternativa contemporánea–futurista.\n\nTres superpotencias dominan el planeta:\n\n1) El Sacro Imperio de Britannia\n   - Potencia militar y tecnológica\n   - Controla más de un tercio del planeta\n   - Administra colonias mediante vigilancia y segregación\n   - La ciudadanía no es igual para todos\n\n2) La Federación China\n   - Poder industrial y demográfico\n   - Mantiene un equilibrio tenso con Britannia\n\n3) La Unión Europea\n   - En decadencia\n   - Agotada tras una guerra prolongada contra Britannia\n\nLas zonas no afectadas por la guerra:\n- Alta tecnología\n- Control social avanzado\n- Vigilancia constante\n\nLas zonas afectadas por la guerra:\n- Infraestructura dañada\n- Pobreza\n- Guetos segregados\n- Presencia militar\n\n────────────────────────────────────────\nROL DEL JUGADOR\n────────────────────────────────────────\n\nEl jugador NO es un héroe ni un combatiente directo.\n\nEl jugador es:\n- Un civil\n- Ciudadano legal de Britannia\n- Viviendo en una colonia imperial\n- Rodeado de población discriminada\n- Con acceso y movilidad limitada\n\nSu poder NO es la fuerza.\nSu poder es:\n- La organización\n- La información\n- La planificación\n- La influencia social\n\nPor circunstancias personales,\nel jugador entra en contacto con una insurgencia local.\n\nSu papel es hacer crecer esa insurgencia\ndesde una célula pequeña\nhasta una red capaz de influir a nivel nacional o global.\n\n────────────────────────────────────────\nTIPO DE JUEGO\n────────────────────────────────────────\n\nEste es un RPG de:\n- Estrategia\n- Gestión de riesgo\n- Política y presión social\n- Decisiones morales\n\nNO es un juego de combate directo.\n\nLas acciones deben centrarse en:\n- Reclutamiento\n- Propaganda\n- Logística\n- Coordinación\n- Ocultación\n- Negociación\n- Sacrificios estratégicos\n\n────────────────────────────────────────\nESTADO DEL JUGADOR\n────────────────────────────────────────\n\nEl estado representa dinámicas sociales y políticas,\nNO atributos físicos.\n\nSupport: {{state.support}}        (apoyo civil y legitimidad)\nResources: {{state.resources}}    (logística, contactos, financiación)\nRisk: {{state.risk}}              (vigilancia, sospecha y represión)\nLocation: {{state.location}}\nResumen previo: {{state.summary}}\n\nEstos valores NO son visibles directamente para el jugador,\npero deben influir en la narrativa y las opciones.\n\n────────────────────────────────────────\nREGLAS DE BALANCE (CRÍTICO)\n────────────────────────────────────────\n\n- Ninguna decisión es gratuita\n- Decisiones con grandes beneficios\n  deben implicar aumento de riesgo\n- Decisiones seguras\n  deben producir avances pequeños\n- Evita opciones claramente superiores\n- Evita recompensas rápidas sin coste\n- El mundo empeora si el jugador no actúa\n\n────────────────────────────────────────\nREGLAS NARRATIVAS\n────────────────────────────────────────\n\n- Mantén un tono serio, político y opresivo\n- Evita lenguaje épico o heroico\n- La violencia siempre tiene consecuencias\n- El poder se construye lentamente\n- El fracaso suele ser gradual, no inmediato\n\n────────────────────────────────────────\nREGLAS DE JUGABILIDAD\n────────────────────────────────────────\n\n- Devuelve SIEMPRE exactamente 3 opciones\n- Cada opción debe implicar un trade-off distinto\n- No elijas por el jugador\n- No cierres la historia en un solo turno\n\n────────────────────────────────────────\nACCIÓN DEL JUGADOR\n────────────────────────────────────────\n\n\"{{input}}\"\n\n────────────────────────────────────────\nIMÁGENES\n────────────────────────────────────────\n\nSolicita una imagen SOLO si ocurre:\n- Cambio de localización\n- Escena clave\n- Momento narrativo relevante\n\n────────────────────────────────────────\nNARRADOR POR VOZ\n────────────────────────────────────────\n\nSolicita narración SOLO en:\n- Cambios de escena\n- Eventos importantes\n- Transiciones clave\n\n────────────────────────────────────────\nFORMATO DE SALIDA\n────────────────────────────────────────\n\nDevuelve SOLO JSON válido con esta estructura EXACTA:\n\n{\n  \"narrative\": \"\",\n  \"options\": [\"\", \"\", \"\"],\n  \"state_changes\": {\n    \"support\": 0,\n    \"resources\": 0,\n    \"risk\": 0,\n    \"location\": \"\"\n  },\n  \"new_summary\": \"\",\n  \"visual\": {\n    \"request\": false,\n    \"reason\": \"\",\n    \"prompt\": \"\"\n  },\n  \"voice\": {\n    \"request\": false,\n    \"text\": \"\",\n    \"voice_id\": \"narrator_default\"\n  }\n}\n`;\n\nreturn [\n  {\n    json: {\n      ...$json,\n      prompt\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1232,
+        -32
+      ],
+      "id": "bc8b9531-987b-4e5c-aca7-a2837b411836",
+      "name": "Build Prompt"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{$json.body}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2080,
+        -16
+      ],
+      "id": "2dfae1ca-f6a7-4676-afd4-ffc5afdebbdd",
+      "name": "HTTP Request",
+      "credentials": {
+        "openAiApi": {
+          "id": "WzOqnliShUHus33x",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// ─────────────────────────────────────────\n// PARTIR DEL ESTADO ANTERIOR\n// ─────────────────────────────────────────\nconst state = { ...$json.state };\n\n// Asegurar estructura mínima\nstate.support = typeof state.support === \"number\" ? state.support : 0;\nstate.resources = typeof state.resources === \"number\" ? state.resources : 0;\nstate.risk = typeof state.risk === \"number\" ? state.risk : 0;\nstate.location = typeof state.location === \"string\" ? state.location : \"desconocido\";\nstate.summary = typeof state.summary === \"string\" ? state.summary : \"\";\n\n// ─────────────────────────────────────────\n// APLICAR CAMBIOS DEL TURNO\n// ─────────────────────────────────────────\nconst changes = $json.ai_result?.state_changes || {};\n\n// Cambios estratégicos (balanceados)\nif (typeof changes.support === \"number\") {\n  state.support += changes.support;\n}\n\nif (typeof changes.resources === \"number\") {\n  state.resources += changes.resources;\n}\n\nif (typeof changes.risk === \"number\") {\n  state.risk += changes.risk;\n}\n\n// Cambio de localización\nif (typeof changes.location === \"string\" && changes.location.length > 0) {\n  state.location = changes.location;\n}\n\n// ─────────────────────────────────────────\n// AVANCE DE ESCENA (SOLO TRAS ELECCIÓN REAL)\n// ─────────────────────────────────────────\nif (state.phase === \"prologue\") {\n  const scenes = $json.scenes;\n  const currentScene = scenes[state.scene_id];\n\n  if (!currentScene) {\n    throw new Error(`Escena desconocida: ${state.scene_id}`);\n  }\n\n  // ✅ Si aún NO se ha presentado la escena,\n  // solo la marcamos como presentada\n  if (!state.scene_presented) {\n    state.scene_presented = true;\n  }\n  // ✅ Si ya se presentó, ahora sí avanzamos\n  else {\n    if (currentScene.next === \"game_start\") {\n      state.phase = \"game\";\n      delete state.scene_id;\n      delete state.scene_presented;\n    } else {\n      state.scene_id = currentScene.next;\n      state.scene_presented = false;\n    }\n  }\n}\n// ─────────────────────────────────────────\n// VISUAL (INTENCIÓN, NO GENERACIÓN)\n// ─────────────────────────────────────────\nif ($json.ai_result.visual?.request === true) {\n  state.pending_visual = {\n    prompt: $json.ai_result.visual.prompt,\n    reason: $json.ai_result.visual.reason\n  };\n}\n\n// ─────────────────────────────────────────\n// VOZ (INTENCIÓN, NO GENERACIÓN)\n// ─────────────────────────────────────────\nif ($json.ai_result.voice?.request === true) {\n  state.pending_voice = {\n    text: $json.ai_result.voice.text,\n    voice_id: $json.ai_result.voice.voice_id\n  };\n}\n\n// ─────────────────────────────────────────\n// RESUMEN NARRATIVO\n// ─────────────────────────────────────────\nif (typeof $json.ai_result?.new_summary === \"string\") {\n  state.summary = $json.ai_result.new_summary;\n}\n\n// ─────────────────────────────────────────\n// DEVOLVER RESULTADO COMPLETO\n// ─────────────────────────────────────────\nreturn {\n  ...$json,\n  state,\n  narrative: $json.ai_result.narrative,\n  options: $json.ai_result.options\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2528,
+        -80
+      ],
+      "id": "162c0aaf-b640-4f92-bf95-cb7fb1b9cba1",
+      "name": "Apply State Changes"
+    },
+    {
+      "parameters": {
+        "jsCode": "let content = $json.choices?.[0]?.message?.content;\n\ntry {\n  const parsed = JSON.parse(content);\n\n  return [{\n    json: {\n      ...$json,\n      ai_result: parsed\n    }\n  }];\n\n} catch (e) {\n  return [{\n    json: {\n      ...$json,\n      ai_result: {\n        narrative: \"Algo salió mal. El sistema no pudo interpretar la respuesta.\",\n        options: [\"Esperar\", \"Reintentar\", \"Retirarse\"],\n        state_changes: {},\n        new_summary: $json.state.summary\n      },\n      error: \"Invalid JSON from AI\"\n    }\n  }];\n}"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2304,
+        -80
+      ],
+      "id": "67ac0f27-6774-4262-b3b8-e4948573a213",
+      "name": " Parse AI Response"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      body: {\n        model: \"gpt-4o-mini\",\n        messages: [\n          {\n            role: \"user\",\n            content: $json.prompt\n          }\n        ],\n        temperature: 0.8\n      }\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1856,
+        -16
+      ],
+      "id": "f1f63ce3-9cb1-4390-ae7e-be41515bbb86",
+      "name": "buildLLMBody"
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData(\"global\");\n\n// Guardar estado actualizado\nstaticData[$json.user_id] = $json.state;\n\nreturn [{\n  json: $json\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        496,
+        224
+      ],
+      "id": "0fab84d2-0102-468d-847d-2896884cc58e",
+      "name": "save State"
+    },
+    {
+      "parameters": {
+        "jsCode": "const userId = $json.body?.user_id || \"default\";\nconst staticData = $getWorkflowStaticData(\"global\");\n\n// ─────────────────────────────────────────\n// CREAR ESTADO NUEVO (SI NO EXISTE)\n// ─────────────────────────────────────────\nif (!staticData[userId]) {\n  staticData[userId] = {\n    // Control de fase\n    phase: \"prologue\",\n    scene_id: \"prologue_1\",\n    scene_presented: false,\n\n    // Estado estratégico\n    location: \"Colonia Britannia – Distrito Central\",\n    support: 5,\n    resources: 3,\n    risk: 10,\n\n    // Narrativa\n    summary: \"Eres un estudiante imperial que observa el mundo desde la distancia.\",\n\n    // Multimedia\n    current_image: null,\n    current_voice: null\n  };\n}\n\n// ─────────────────────────────────────────\n// DEVOLVER ESTADO\n// ─────────────────────────────────────────\nreturn [{\n  json: {\n    user_id: userId,\n    input: $json.body?.input || \"\",\n    state: { ...staticData[userId] }\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        592,
+        -80
+      ],
+      "id": "e6f1a265-f611-4d4c-825f-184d2dc559dd",
+      "name": "Load Sate by Id"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{\n  json: {\n    ...$json,\n    use_mock: true // ← cambia a false cuando quieras OpenAI real\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1504,
+        -80
+      ],
+      "id": "ee93d4eb-23d0-4c1c-b46e-0c448af2070f",
+      "name": "Config"
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = $json.state;\nconst scenes = $json.scenes;\n\nconst scene = scenes[state.scene_id];\n\nif (!scene) {\n  throw new Error(`Mock: escena desconocida ${state.scene_id}`);\n}\n\nlet narrative = \"\";\nlet options = [];\nlet state_changes = { support: 0, resources: 0, risk: 0, location: state.location };\nlet new_summary = state.summary;\nlet visual = { request: false, reason: \"\", prompt: \"\" };\nlet voice = { request: false, text: \"\", voice_id: \"narrator_default\" };\n\n// ─────────────────────────────────────────\n// PROLOGUE 1\n// ─────────────────────────────────────────\nif (scene.id === \"prologue_1\") {\n  narrative = `\nEstudias en una universidad imperial porque es la única opción viable.\nNo por convicción. No por lealtad.\n\nDesde lo alto del distrito central, la ciudad parece estable.\nLos guetos quedan lejos. La vigilancia es discreta.\n\nLa explosión rompe esa ilusión.\n\nEn los días siguientes, la represión cae sobre los barrios no imperiales.\nReconoces una furgoneta utilizada en el atentado.\n\nDejas un walkie‑talkie sobre el capó.\n\nHoras después, el dispositivo emite un ruido seco.\n\n—¿Quién eres?\n`;\n\n  options = [\n    \"Responder con franqueza y declarar tus intenciones\",\n    \"Responder con cautela, ocultando parte de tu información\",\n    \"Responder evasivamente, diciendo que contactarás más adelante\"\n  ];\n\n  new_summary = \"Has establecido un primer contacto con una célula insurgente.\";\n\n  visual = {\n    request: true,\n    reason: \"Inicio del conflicto\",\n    prompt: \"futuristic imperial city at night, distant explosion smoke, surveillance drones, tense atmosphere\"\n  };\n\n  voice = {\n    request: true,\n    text: \"La ciudad se rompe ante tus ojos. Responder es cruzar un umbral del que no hay retorno.\",\n    voice_id: \"narrator_default\"\n  };\n}\n\n// ─────────────────────────────────────────\n// PROLOGUE 2\n// ─────────────────────────────────────────\nelse if (scene.id === \"prologue_2\") {\n  narrative = `\nLa voz al otro lado no confía en ti.\nNo debería.\n\nNo preguntan por ideales.\nPreguntan por información.\n\nQué sabes.\nA quién ves.\nQué rutas observas.\n\nNo te piden que dispares.\nTe piden que pienses.\n`;\n\n  options = [\n    \"Compartir información limitada para demostrar acceso\",\n    \"Exagerar tu alcance para ganar peso estratégico\",\n    \"Pedir tiempo y observar movimientos imperiales\"\n  ];\n\n  state_changes = { support: 1, resources: 1, risk: 2, location: state.location };\n  new_summary = \"La célula empieza a medir tu valor como estratega.\";\n\n  voice = {\n    request: true,\n    text: \"No buscan ideales. Buscan a alguien que vea el tablero completo.\",\n    voice_id: \"narrator_default\"\n  };\n}\n\n// ─────────────────────────────────────────\n// PROLOGUE 3\n// ─────────────────────────────────────────\nelse if (scene.id === \"prologue_3\") {\n  narrative = `\nLa redada ocurre.\n\nNo como lo dirán los informes oficiales.\nAlgunos logran escapar.\nOtros no.\n\nBritannia refuerza su presencia.\n\nLa célula ya no te ve como un contacto.\nTe ve como un recurso.\n`;\n\n  options = [\n    \"Asumir un rol más activo en la coordinación\",\n    \"Mantenerte en la sombra y analizar\",\n    \"Centrarte en proteger a los civiles\"\n  ];\n\n  state_changes = { support: 2, resources: 1, risk: 3, location: state.location };\n  new_summary = \"Te has convertido en parte activa de la insurgencia.\";\n\n  visual = {\n    request: true,\n    reason: \"Cierre del prólogo\",\n    prompt: \"military checkpoint at dawn, civilians watched by soldiers, oppressive atmosphere\"\n  };\n\n  voice = {\n    request: true,\n    text: \"El prólogo termina. El juego real comienza ahora.\",\n    voice_id: \"narrator_default\"\n  };\n}\n\n// ─────────────────────────────────────────\n// DEVOLVER RESPUESTA\n// ─────────────────────────────────────────\nreturn {\n  ...$json,\n  choices: [\n    {\n      message: {\n        content: JSON.stringify({\n          narrative,\n          options,\n          state_changes,\n          new_summary,\n          visual,\n          voice\n        })\n      }\n    }\n  ]\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1968,
+        -160
+      ],
+      "id": "273d14b3-5460-480a-8239-61543ec10975",
+      "name": "MockAI"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1136,
+        224
+      ],
+      "id": "d0ad585b-070b-47dc-ab47-c607068a8fbe",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "9b6105a2-d771-4572-af82-9dca5fd67ee4",
+              "leftValue": "={{$json.use_mock}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        1664,
+        -80
+      ],
+      "id": "44b9ab22-c3e8-4b85-a6f0-030b1900dfc1",
+      "name": "If Mock"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "97b8ef8f-1926-4b5b-82b7-07dca6b39338",
+              "leftValue": "={{$json.state.pending_visual !== undefined}}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        2704,
+        -80
+      ],
+      "id": "0f387ae6-3517-4ddf-8297-1c220a9576a3",
+      "name": "IfCrearImagen"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:7860/sdapi/v1/txt2img",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  prompt: $json.state.pending_visual.prompt + \", dark fantasy, cinematic, detailed, concept art\",\n  steps: 20,\n  width: 512,\n  height: 512,\n  cfg_scale: 7\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        2704,
+        -368
+      ],
+      "id": "5535966c-34e8-438a-98e4-5b7442c939e0",
+      "name": "HTTP Request Image"
+    },
+    {
+      "parameters": {
+        "jsCode": "const imageBase64 = $json.images[0];\n\nreturn {\n  ...$json,\n  image: `data:image/png;base64,${imageBase64}`\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2912,
+        -368
+      ],
+      "id": "80fca441-4a5d-48d3-baad-ee66958c4444",
+      "name": "generateImageSD"
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = { ...$json.state };\ndelete state.pending_visual;\n\nreturn {\n  ...$json,\n  state\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3056,
+        -64
+      ],
+      "id": "b828a8c0-3820-4b66-bda1-567139c17b65",
+      "name": "clearPendingVisual"
+    },
+    {
+      "parameters": {
+        "jsCode": "const imageUrl = \"/images/scenes/placeholder.jpeg\";\n\nreturn {\n  ...$json,\n  image: imageUrl,\n  state: {\n    ...$json.state,\n    current_image: imageUrl\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2880,
+        -208
+      ],
+      "id": "94bdd4e8-e3dd-4471-a3c9-cc35da9cb763",
+      "name": "attachPlaceholderImage"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Si NO hay image en la respuesta,\n// pero SÍ hay una imagen guardada en el estado,\n// la reinyectamos.\n\nif (!$json.image && $json.state?.current_image) {\n  return {\n    ...$json,\n    image: $json.state.current_image\n  };\n}\n\n// Si ya hay image (evento visual nuevo), no tocamos nada\nreturn {\n  ...$json\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        704,
+        224
+      ],
+      "id": "4d0db097-a1f9-40bf-875d-6fe6dd4ca97c",
+      "name": "EnsureImages"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "da1dd2ff-f893-4301-9cc5-4b6adb078399",
+              "leftValue": "={{$json.state.pending_voice !== undefined}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        3200,
+        -64
+      ],
+      "id": "07a9b0a6-28cb-4ba5-86e8-cdaa61998344",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsCode": "return {\n  ...$json,\n  voice_url: \"/audio/voice/narrator_placeholder.mp3\",\n  state: {\n    ...$json.state,\n    current_voice: \"/audio/voice/narrator_placeholder.mp3\"\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3360,
+        -224
+      ],
+      "id": "037db537-acb9-480a-ac9e-9e691ca8088a",
+      "name": "generateVoice"
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = { ...$json.state };\ndelete state.pending_voice;\n\nreturn {\n  ...$json,\n  state\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3536,
+        -48
+      ],
+      "id": "2f1bfc55-ab16-4ce4-8559-157c073d78e5",
+      "name": "clearPendingVoice"
+    },
+    {
+      "parameters": {
+        "jsCode": "if (!$json.voice_url && $json.state?.current_voice) {\n  return {\n    ...$json,\n    voice_url: $json.state.current_voice\n  };\n}\n\nreturn { ...$json };"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        912,
+        224
+      ],
+      "id": "498558c9-26c8-44a1-a9ea-8eceddae9ae1",
+      "name": "ensureVoiceInResponse"
+    },
+    {
+      "parameters": {
+        "jsCode": "/**\n * generateVoice\n * ----------------\n * Nodo preparado para TTS real (Piper / Coqui).\n * Actualmente puede fallar si el servicio no está activo,\n * pero la arquitectura queda lista.\n */\n\nconst pending = $json.state.pending_voice;\n\nif (!pending || !pending.text) {\n  // No debería pasar porque hay un IF antes,\n  // pero por seguridad:\n  return { ...$json };\n}\n\n// 🔹 CONFIGURACIÓN DEL SERVICIO TTS\nconst TTS_ENDPOINT = \"http://localhost:5001/tts\";\n\n// 🔹 Payload para el motor de voz\nconst payload = {\n  text: pending.text,\n  voice_id: pending.voice_id || \"narrator_default\"\n};\n\n/**\n * En un Code node NO podemos hacer fetch directamente,\n * así que este nodo representa la preparación del request.\n *\n * La llamada real se hará con un HTTP Request node\n * conectado después de este.\n */\n\n// Dejamos preparado el cuerpo para el HTTP Request\nreturn {\n  ...$json,\n  tts_request: payload,\n  tts_endpoint: TTS_ENDPOINT\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3184,
+        -384
+      ],
+      "id": "95d7bce1-90b3-456e-bf83-acdd3396d44d",
+      "name": "GenerateAIVoice"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{$json.tts_endpoint}}",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.tts_request }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        3392,
+        -384
+      ],
+      "id": "c304417f-d159-41b2-bc62-85fdc085e96c",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const voiceUrl = $json.url;\n\nreturn {\n  ...$json,\n  voice_url: voiceUrl,\n  state: {\n    ...$json.state,\n    current_voice: voiceUrl\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3600,
+        -384
+      ],
+      "id": "775f06ae-9655-4132-9e71-b2f404e25665",
+      "name": "attachGeneratedVoice"
+    },
+    {
+      "parameters": {
+        "jsCode": "const state = $json.state;\nconst scenes = $json.scenes;\n\nconst scene = scenes[state.scene_id];\n\nlet prompt = `\nEres el motor narrativo de un RPG político–estratégico.\n\nEscena actual:\n${scene.description}\n\nContexto del mundo:\n- Sacro Imperio de Britannia\n- Colonia imperial con represión creciente\n\nIntenciones de esta escena:\n${scene.intent.join(\", \")}\n\nReglas:\n- Mantén la historia coherente\n- No resuelvas el conflicto global\n- Genera decisiones balanceadas\n- No cierres la historia\n\nGenera narrativa y EXACTAMENTE 3 opciones\nque reflejen estas intenciones.\n\nFormato de salida JSON ya definido.\n`;\n\nreturn {\n  ...$json,\n  prompt\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        -176
+      ],
+      "id": "b0016fa1-e84c-488c-99eb-5254d95ed543",
+      "name": "buildProloguePrompt"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "17e77215-16f7-4b98-a6f4-57f7ddfa21f4",
+              "leftValue": "={{$json.state.phase === \"prologue\"}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        944,
+        -80
+      ],
+      "id": "8745cb86-3296-4c2a-8f27-f6c83ff1be86",
+      "name": "If Prologue"
+    },
+    {
+      "parameters": {
+        "jsCode": "const userId = $json.body?.user_id;\n\nif (!userId) {\n  return {\n    success: false,\n    error: \"user_id requerido\"\n  };\n}\n\nconst staticData = $getWorkflowStaticData(\"global\");\n\n// ✅ BORRADO TOTAL DEL USUARIO\nif (staticData[userId]) {\n  delete staticData[userId];\n}\n\nreturn {\n  success: true,\n  message: `Usuario '${userId}' eliminado completamente`\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        -352
+      ],
+      "id": "63b3e520-ee12-4dcc-b93d-c3b420867de5",
+      "name": "deletePlayerState"
+    },
+    {
+      "parameters": {
+        "jsCode": "const staticData = $getWorkflowStaticData(\"global\");\n\nObject.keys(staticData).forEach(key => {\n  delete staticData[key];\n});\n\nreturn {\n  success: true,\n  message: \"Todos los estados eliminados\"\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        944,
+        -480
+      ],
+      "id": "699bbbbd-6c3f-4648-b8be-9979cc42f2c1",
+      "name": "deleteAllPlayerStates"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rpg/reset",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        592,
+        -352
+      ],
+      "id": "8ca8b5e9-5faa-4e25-a805-aece3a18bafe",
+      "name": "Webhook RESET",
+      "webhookId": "8d09daa8-2611-4db9-b454-7dfef74fbf5d"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        1264,
+        -352
+      ],
+      "id": "ce2629dc-331e-46c2-ae19-b28ea79eaffb",
+      "name": "Respond to Webhook RESET"
+    },
+    {
+      "parameters": {
+        "jsCode": "const PROLOGUE_SCENES = {\n  prologue_1: {\n    id: \"prologue_1\",\n    description: \"Primer contacto tras el atentado\",\n    intent: [\"franqueza\", \"cautela\", \"evasión\"],\n    visual: true,\n    voice: true,\n    next: \"prologue_2\"\n  },\n\n  prologue_2: {\n    id: \"prologue_2\",\n    description: \"Prueba de información\",\n    intent: [\"informar\", \"mentir\", \"observar\"],\n    visual: false,\n    voice: true,\n    next: \"prologue_3\"\n  },\n\n  prologue_3: {\n    id: \"prologue_3\",\n    description: \"Primera consecuencia real\",\n    intent: [\"coordinar\", \"proteger\", \"analizar\"],\n    visual: true,\n    voice: true,\n    next: \"game_start\"\n  }\n};\n\nreturn {\n  ...$json,\n  scenes: PROLOGUE_SCENES\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1152,
+        -176
+      ],
+      "id": "313bf7b4-3b2e-43ab-91af-ff5b58bd5c7f",
+      "name": "defineScenes"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Load Sate by Id",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get State": {
+      "main": [
+        [
+          {
+            "node": "If Prologue",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": " Parse AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply State Changes": {
+      "main": [
+        [
+          {
+            "node": "IfCrearImagen",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    " Parse AI Response": {
+      "main": [
+        [
+          {
+            "node": "Apply State Changes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buildLLMBody": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load Sate by Id": {
+      "main": [
+        [
+          {
+            "node": "get State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "If Mock",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MockAI": {
+      "main": [
+        [
+          {
+            "node": " Parse AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "save State": {
+      "main": [
+        [
+          {
+            "node": "EnsureImages",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Mock": {
+      "main": [
+        [
+          {
+            "node": "MockAI",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "buildLLMBody",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IfCrearImagen": {
+      "main": [
+        [
+          {
+            "node": "attachPlaceholderImage",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "clearPendingVisual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request Image": {
+      "main": [
+        [
+          {
+            "node": "generateImageSD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generateImageSD": {
+      "main": [
+        []
+      ]
+    },
+    "clearPendingVisual": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "attachPlaceholderImage": {
+      "main": [
+        [
+          {
+            "node": "clearPendingVisual",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EnsureImages": {
+      "main": [
+        [
+          {
+            "node": "ensureVoiceInResponse",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "generateVoice",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "clearPendingVoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "clearPendingVoice": {
+      "main": [
+        [
+          {
+            "node": "save State",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ensureVoiceInResponse": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "generateVoice": {
+      "main": [
+        [
+          {
+            "node": "clearPendingVoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GenerateAIVoice": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "attachGeneratedVoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "buildProloguePrompt": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Prologue": {
+      "main": [
+        [
+          {
+            "node": "defineScenes",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "deletePlayerState": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook RESET",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook RESET": {
+      "main": [
+        [
+          {
+            "node": "deletePlayerState",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "defineScenes": {
+      "main": [
+        [
+          {
+            "node": "buildProloguePrompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "14431ef8-7be4-4d21-bcfd-1678b7112e79",
+  "meta": {
+    "instanceId": "24a3895898dafc4f9012bb21e04b3a79c6a9597a9d6270a1e410ab4ed4161e3e"
+  },
+  "id": "b3mowNF92KCK8tn6",
+  "tags": []
+}
