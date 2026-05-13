@@ -1,39 +1,41 @@
-import React from "react";
-
-const centeredScreen = {
-  height: "100vh",
-  background: "radial-gradient(circle, #0e0e14, #050509)",
-  color: "#eaeaf0",
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  textAlign: "center",
-  padding: 20
-};
-
-const primaryButton = {
-  padding: "14px 36px",
-  fontSize: 16,
-  backgroundColor: "#4b5cff",
-  color: "#fff",
-  border: "none",
-  borderRadius: 8,
-  cursor: "pointer",
-  marginTop: 20
-};
+import Screen from "./ui/screen";
+import { motion } from "framer-motion";
 
 export default function TitleScreen({ onStart }) {
   return (
-    <div style={centeredScreen}>
-      <h1 style={{ fontSize: 52 }}>IbaiRPG</h1>
-      <p style={{ opacity: 0.7 }}>
-        RPG narrativo experimental impulsado por IA
-      </p>
+    <Screen>
+      <div className="text-center space-y-6 max-w-xl">
 
-      <button style={primaryButton} onClick={onStart}>
-        Comenzar
-      </button>
-    </div>
+        <motion.h1
+          className="text-5xl font-semibold tracking-tight"
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.6 }}
+        >
+          SIMULACIÓN: INSURGENCIA
+        </motion.h1>
+
+        <motion.p
+          className="text-zinc-300 text-sm uppercase tracking-wide"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          Un entorno narrativo de decisiones estratégicas
+          <br />
+          impulsado por inteligencia artificial
+        </motion.p>
+        
+        <motion.button
+          onClick={onStart}
+          className="mt-6 px-6 py-3 rounded bg-zinc-800 hover:bg-zinc-700 transition"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.8 }}
+        >
+          Iniciar simulación
+        </motion.button>
+      </div>
+    </Screen>
   );
 }
