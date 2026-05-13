@@ -107,7 +107,9 @@ El frontend no contiene lógica narrativa ni reglas del sistema.
 ibai-rpg/
 ├─ backend/   # Motor narrativo y lógica (n8n local)
 ├─ frontend/  # Interfaz web y experiencia de usuario
-└─ docs/      # Documentación adicional
+├─docs/      # Documentación adicional
+└─AI         # Repositorios de IA locales usadas
+
 ```
 
 ### 🚧 Estado actual

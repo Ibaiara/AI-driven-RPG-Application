@@ -4,6 +4,7 @@ El backend implementa el **motor narrativo** del juego.
 
 No se trata de un backend tradicional CRUD, sino de un **orquestador de estado, escenas y decisiones**, con integración de IA generativa.
 
+Durante el desarrollo, el backend se ejecuta **en local mediante n8n**, utilizando workflows como núcleo del sistema.
 ---
 
 ## Responsabilidades
@@ -34,6 +35,19 @@ Componentes principales:
 - `applyStateChanges`: aplica consecuencias
 - `generateImage`: abstracción de generación visual
 - `generateVoice`: abstracción de narrador
+
+---
+
+
+## Ejecución en local (n8n)
+
+Durante el desarrollo, el motor se ejecuta **localmente** mediante una instancia de n8n:
+
+- Los workflows se importan manualmente desde el directorio `backend/n8n/workflows`
+- El estado del juego se mantiene dentro del propio workflow
+- La comunicación con el frontend se realiza a través de endpoints HTTP expuestos por n8n
+
+Este enfoque permite iterar rápidamente sobre la lógica del sistema sin necesidad de desplegar infraestructura adicional.
 
 ---
 

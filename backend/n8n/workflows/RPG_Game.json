@@ -11,10 +11,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        432,
-        -80
+        -48,
+        160
       ],
-      "id": "191e4c05-c420-45c9-8246-7a7eefe252c1",
+      "id": "d3054c28-7587-44f8-bba1-7533448f3f06",
       "name": "Webhook",
       "webhookId": "bb7a681a-389f-4c2d-b1af-f200cda76b39"
     },
@@ -26,10 +26,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        752,
-        -80
+        272,
+        160
       ],
-      "id": "857dd849-cc79-4bdc-80d5-f8686794adc9",
+      "id": "7a1012df-db93-4b71-bf51-4e35024bc975",
       "name": "get State"
     },
     {
@@ -39,46 +39,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1232,
-        -32
+        752,
+        208
       ],
-      "id": "bc8b9531-987b-4e5c-aca7-a2837b411836",
+      "id": "8b9d01ba-8375-45a0-ae49-bb2993575352",
       "name": "Build Prompt"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://api.openai.com/v1/chat/completions",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "openAiApi",
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "Content-Type",
-              "value": "application/json"
-            }
-          ]
-        },
-        "sendBody": true,
-        "specifyBody": "json",
-        "jsonBody": "={{$json.body}}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.4,
-      "position": [
-        2080,
-        -16
-      ],
-      "id": "2dfae1ca-f6a7-4676-afd4-ffc5afdebbdd",
-      "name": "HTTP Request",
-      "credentials": {
-        "openAiApi": {
-          "id": "WzOqnliShUHus33x",
-          "name": "OpenAI account"
-        }
-      }
     },
     {
       "parameters": {
@@ -87,10 +52,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2528,
-        -80
+        2048,
+        160
       ],
-      "id": "162c0aaf-b640-4f92-bf95-cb7fb1b9cba1",
+      "id": "eb014e8a-5ba2-4759-908e-e56ddf8b2243",
       "name": "Apply State Changes"
     },
     {
@@ -100,10 +65,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2304,
-        -80
+        1824,
+        160
       ],
-      "id": "67ac0f27-6774-4262-b3b8-e4948573a213",
+      "id": "e580bea5-54ae-48d1-9fe1-e00aa0bdc3d1",
       "name": " Parse AI Response"
     },
     {
@@ -113,10 +78,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1856,
-        -16
+        1376,
+        224
       ],
-      "id": "f1f63ce3-9cb1-4390-ae7e-be41515bbb86",
+      "id": "38487724-e170-46c4-a6b1-54fef2b17f5b",
       "name": "buildLLMBody"
     },
     {
@@ -126,10 +91,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        496,
-        224
+        16,
+        464
       ],
-      "id": "0fab84d2-0102-468d-847d-2896884cc58e",
+      "id": "074b1b41-64a2-486b-b6a6-bdbd583bfea3",
       "name": "save State"
     },
     {
@@ -139,10 +104,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        592,
-        -80
+        112,
+        160
       ],
-      "id": "e6f1a265-f611-4d4c-825f-184d2dc559dd",
+      "id": "e54bac74-8889-47c1-b957-8ab816d5a39c",
       "name": "Load Sate by Id"
     },
     {
@@ -152,10 +117,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1504,
-        -80
+        1024,
+        160
       ],
-      "id": "ee93d4eb-23d0-4c1c-b46e-0c448af2070f",
+      "id": "33396f98-dd06-4da9-875a-daf950cb3d07",
       "name": "Config"
     },
     {
@@ -165,10 +130,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1968,
-        -160
+        1488,
+        80
       ],
-      "id": "273d14b3-5460-480a-8239-61543ec10975",
+      "id": "2150d266-85d0-4699-b957-70b3a327a3d7",
       "name": "MockAI"
     },
     {
@@ -180,10 +145,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
-        1136,
-        224
+        656,
+        464
       ],
-      "id": "d0ad585b-070b-47dc-ab47-c607068a8fbe",
+      "id": "8befd451-56d4-4e02-bc56-73bb01b2962a",
       "name": "Respond to Webhook"
     },
     {
@@ -214,10 +179,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        1664,
-        -80
+        1184,
+        160
       ],
-      "id": "44b9ab22-c3e8-4b85-a6f0-030b1900dfc1",
+      "id": "9ff4022a-9847-4a08-8a7d-a250d548b5db",
       "name": "If Mock"
     },
     {
@@ -247,10 +212,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        2704,
-        -80
+        2224,
+        160
       ],
-      "id": "0f387ae6-3517-4ddf-8297-1c220a9576a3",
+      "id": "995d25fc-7b9d-4ef7-b0ff-e759c33d2475",
       "name": "IfCrearImagen"
     },
     {
@@ -274,10 +239,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        2704,
-        -368
+        2224,
+        -128
       ],
-      "id": "5535966c-34e8-438a-98e4-5b7442c939e0",
+      "id": "f6909462-d701-4a2f-a677-3560eafe4508",
       "name": "HTTP Request Image"
     },
     {
@@ -287,10 +252,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2912,
-        -368
+        2432,
+        -160
       ],
-      "id": "80fca441-4a5d-48d3-baad-ee66958c4444",
+      "id": "682c4f13-51d8-472c-a17b-617ef21ead45",
       "name": "generateImageSD"
     },
     {
@@ -300,10 +265,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3056,
-        -64
+        2576,
+        176
       ],
-      "id": "b828a8c0-3820-4b66-bda1-567139c17b65",
+      "id": "a6f7b494-cf78-4ea6-85e3-7751d9e997ec",
       "name": "clearPendingVisual"
     },
     {
@@ -313,10 +278,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2880,
-        -208
+        2400,
+        32
       ],
-      "id": "94bdd4e8-e3dd-4471-a3c9-cc35da9cb763",
+      "id": "f1fbfc0c-5d3f-4207-81f0-4dc1459096b5",
       "name": "attachPlaceholderImage"
     },
     {
@@ -326,10 +291,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        704,
-        224
+        224,
+        464
       ],
-      "id": "4d0db097-a1f9-40bf-875d-6fe6dd4ca97c",
+      "id": "78e9393c-a7a8-4de3-ae13-61b886ba813f",
       "name": "EnsureImages"
     },
     {
@@ -360,10 +325,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        3200,
-        -64
+        2720,
+        176
       ],
-      "id": "07a9b0a6-28cb-4ba5-86e8-cdaa61998344",
+      "id": "85c4716b-d3ea-4d5b-b2f3-9cfad0eec23b",
       "name": "If"
     },
     {
@@ -373,10 +338,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3360,
-        -224
+        2880,
+        16
       ],
-      "id": "037db537-acb9-480a-ac9e-9e691ca8088a",
+      "id": "e57a5e65-9b57-4689-9412-4a0bcb2c945d",
       "name": "generateVoice"
     },
     {
@@ -386,10 +351,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3536,
-        -48
+        3056,
+        192
       ],
-      "id": "2f1bfc55-ab16-4ce4-8559-157c073d78e5",
+      "id": "48a9c363-49b1-481b-81a5-a8a582fc0f63",
       "name": "clearPendingVoice"
     },
     {
@@ -399,10 +364,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        912,
-        224
+        432,
+        464
       ],
-      "id": "498558c9-26c8-44a1-a9ea-8eceddae9ae1",
+      "id": "39836a0c-66a6-47b4-ae41-435e8538d40e",
       "name": "ensureVoiceInResponse"
     },
     {
@@ -412,10 +377,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3184,
-        -384
+        2704,
+        -144
       ],
-      "id": "95d7bce1-90b3-456e-bf83-acdd3396d44d",
+      "id": "6db313a0-c3af-4b95-bebd-90a162e775c1",
       "name": "GenerateAIVoice"
     },
     {
@@ -430,10 +395,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        3392,
-        -384
+        2912,
+        -144
       ],
-      "id": "c304417f-d159-41b2-bc62-85fdc085e96c",
+      "id": "5b9185ff-bda0-4c40-bf34-67316e7263e8",
       "name": "HTTP Request1"
     },
     {
@@ -443,10 +408,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3600,
-        -384
+        3120,
+        -144
       ],
-      "id": "775f06ae-9655-4132-9e71-b2f404e25665",
+      "id": "5554ae79-8644-4077-bc78-76735b13f0e0",
       "name": "attachGeneratedVoice"
     },
     {
@@ -456,10 +421,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1328,
-        -176
+        848,
+        64
       ],
-      "id": "b0016fa1-e84c-488c-99eb-5254d95ed543",
+      "id": "8396f473-3c8c-4fc6-bfbc-4b7f6b0faddf",
       "name": "buildProloguePrompt"
     },
     {
@@ -490,10 +455,10 @@
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.3,
       "position": [
-        944,
-        -80
+        464,
+        160
       ],
-      "id": "8745cb86-3296-4c2a-8f27-f6c83ff1be86",
+      "id": "2ad05273-76a6-401a-a282-4a04ac0486a4",
       "name": "If Prologue"
     },
     {
@@ -503,10 +468,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        944,
-        -352
+        464,
+        -112
       ],
-      "id": "63b3e520-ee12-4dcc-b93d-c3b420867de5",
+      "id": "3d319676-bc25-44f8-8f1f-085475934822",
       "name": "deletePlayerState"
     },
     {
@@ -516,10 +481,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        944,
-        -480
+        464,
+        -240
       ],
-      "id": "699bbbbd-6c3f-4648-b8be-9979cc42f2c1",
+      "id": "0f2a0bd1-6c6b-48cd-b72b-c3ba5ccf4f85",
       "name": "deleteAllPlayerStates"
     },
     {
@@ -532,10 +497,10 @@
       "type": "n8n-nodes-base.webhook",
       "typeVersion": 2.1,
       "position": [
-        592,
-        -352
+        112,
+        -112
       ],
-      "id": "8ca8b5e9-5faa-4e25-a805-aece3a18bafe",
+      "id": "2ef90250-742e-44d5-8d3c-9e90ebd70adf",
       "name": "Webhook RESET",
       "webhookId": "8d09daa8-2611-4db9-b454-7dfef74fbf5d"
     },
@@ -548,10 +513,10 @@
       "type": "n8n-nodes-base.respondToWebhook",
       "typeVersion": 1.5,
       "position": [
-        1264,
-        -352
+        752,
+        -112
       ],
-      "id": "ce2629dc-331e-46c2-ae19-b28ea79eaffb",
+      "id": "d0265c37-7855-4108-972a-7bf4d9365802",
       "name": "Respond to Webhook RESET"
     },
     {
@@ -561,11 +526,43 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1152,
-        -176
+        672,
+        64
       ],
-      "id": "313bf7b4-3b2e-43ab-91af-ff5b58bd5c7f",
+      "id": "482b4346-646e-439d-b6dd-4e2b7ad6b7f5",
       "name": "defineScenes"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        752,
+        -256
+      ],
+      "id": "eadff8b6-c5a9-47ce-8e5c-9a1f83763e8b",
+      "name": "Respond to Webhook RESET1"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "rpg/resetALL",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        -240
+      ],
+      "id": "4bbaf445-2622-4d54-86a5-93f47cbf0b03",
+      "name": "Webhook RESETALL",
+      "webhookId": "8d09daa8-2611-4db9-b454-7dfef74fbf5d"
     }
   ],
   "pinData": {},
@@ -603,17 +600,6 @@
         ]
       ]
     },
-    "HTTP Request": {
-      "main": [
-        [
-          {
-            "node": " Parse AI Response",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Apply State Changes": {
       "main": [
         [
@@ -640,7 +626,7 @@
       "main": [
         [
           {
-            "node": "HTTP Request",
+            "node": " Parse AI Response",
             "type": "main",
             "index": 0
           }
@@ -736,11 +722,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "generateImageSD": {
-      "main": [
-        []
       ]
     },
     "clearPendingVisual": {
@@ -910,6 +891,28 @@
           }
         ]
       ]
+    },
+    "deleteAllPlayerStates": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook RESET1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook RESETALL": {
+      "main": [
+        [
+          {
+            "node": "deleteAllPlayerStates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
@@ -917,10 +920,10 @@
     "executionOrder": "v1",
     "binaryMode": "separate"
   },
-  "versionId": "14431ef8-7be4-4d21-bcfd-1678b7112e79",
+  "versionId": "ec395465-38cf-4489-abe4-599143a8e9ba",
   "meta": {
-    "instanceId": "24a3895898dafc4f9012bb21e04b3a79c6a9597a9d6270a1e410ab4ed4161e3e"
+    "instanceId": "6b0491e1dff11e1c598dca73662919a0f8dabcd3e5aa76b26ec3c0fa9ce802da"
   },
-  "id": "b3mowNF92KCK8tn6",
+  "id": "IhsDF9re0S2SHAMe",
   "tags": []
 }
